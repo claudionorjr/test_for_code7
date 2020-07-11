@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} Cadastrar {% endblock %}
+{% block content %}
+    {% from 'bootstrap/form.html' import render_form %}
+    <div class="container-sm row justify-content-md-center">
+        <div class="card col-4 mt-5 pt-4 pb-4 shadow mb-5 bg-white rounded">
+            <div>
+                <div class="row justify-content-md-center">
+                    <div class="col-12 form-group">
+                        {{ render_form(form, button_style="success btn-block shadow-sm", button_size="sm") }}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-12">
+                    <p>Já é cadastrado?
+                        <a href="{{ url_for('login') }}">Logar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

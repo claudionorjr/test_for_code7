@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Account {% endblock %}
+{% block content %}
+    <div class="container-sm row justify-content-md-center">
+        <div class="card col-3 mt-5 pt-4 pb-4 shadow mb-5 bg-white rounded">
+            <div class="row justify-content-md-center">
+                <table class="col-11 table table-responsive table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ current_user.id }}</td>
+                        <td>{{ current_user.name }}</td>
+                        <td>{{ current_user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a type="button" href="{{ url_for('delete_confimation') }}" class="btn btn-danger btn-sm shadow-sm mt-3">Excluir Conta</a>
+        </div>
+    </div>
+{% endblock %}

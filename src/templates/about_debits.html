@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+    <div class="container-sm row justify-content-md-center">
+        <div class="card col-9 mt-3 pt-4 pb-4 shadow mb-2 bg-white rounded">
+            <table class="col-12 ml-3 table table-responsive table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in users|sort(reverse=true, attribute='risk_rating') %}
+                        <tr>
+                            <td>{{user['id']}}</td>
+                            <td>{{user['name']}}</td>
+                            <td>{{user['email']}}</td>
+                            <td>{{user['phone']}}</td>
+                            <td class="text-center">
+                                <a href="{{ url_for('home') }}" class="btn btn-success btn-sm shadow-sm ml-2">Home</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
