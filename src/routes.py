@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from data.sql_alchemy import database as db
 from src.models.user import UserModel
 from src.models.debit import DebitModel
-from .forms import LoginForm, RegisterForm, NewDebitForm
+from .forms import LoginForm, RegisterForm, NewDebitForm, EditDebitForm
 from .users import get_users
 
 
@@ -114,14 +114,37 @@ def init_routes(app):
 
             return redirect(url_for("about_debits", id=id))
 
-        return render_template("about_debits.html", form=form, debits=debits)
+        return render_template("about_debits.html", form=form, debits=debits, user_id=id)
     
-    @app.route("/about_debits/delete_debits")
+    @app.route("/about_debits/<int:id>/delete_debits/<int:debit_id>")
     @login_required
-    def delete_debit():
-        pass
+    def delete_debit(id, debit_id):
+        debits = DebitModel.query.filter_by(id=debit_id).first()
+        try:
+            session_to_delete(debits)
+            flash(message="Débito deletado com sucesso!", category="success")
+        except:
+            flash(message="Erro ao deletar.", category="danger")
+            return redirect(url_for("about_debits", id=id))
 
-    @app.route("/about_debits/edit_debits")
+        return redirect(url_for("about_debits", id=id))
+
+    @app.route("/about_debits/<int:id>/edit_debits/<int:debit_id>", methods=["GET","POST"])
     @login_required
-    def edit_debit():
-        pass
+    def edit_debit(id, debit_id):
+        user = UserModel.query.filter_by(id=id).first()
+        debit = DebitModel.query.filter_by(id=debit_id).first()
+        form = EditDebitForm(obj=debit)
+
+        if form.validate_on_submit():
+            form.populate_obj(debit)
+            try:
+                session_to_add(debit)
+                flash(message="Débito atualizado com sucesso!", category="success")
+            except:
+                flash(message="Erro, em atualizar o débito.", category="warning")
+                return redirect(url_for("about_debits", id=id))
+
+            return redirect(url_for("about_debits", id=id))
+
+        return render_template("edit_debit.html", form=form)

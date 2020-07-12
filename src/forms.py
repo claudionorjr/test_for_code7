@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import EmailField, DecimalField
 from wtforms.fields import StringField, PasswordField, SubmitField, DateField
-from wtforms.validators import Length, Email, DataRequired, Regexp
+from wtforms.validators import Length, Email, DataRequired, Regexp, Optional
 
 
 class LoginForm(FlaskForm):
@@ -34,14 +34,26 @@ class RegisterForm(FlaskForm):
 
 class NewDebitForm(FlaskForm):
     reason = StringField("Motivo", validators=[
-        Length(5, 120, "Nome deve conter entre 5 a 80 caracteres."),
+        Length(5, 35, "Motivo deve conter entre 5 a 35 caracteres."),
         DataRequired("Campo Obrigatório.")
     ])
     debit_date = DateField("Data", format="%d/%m/%Y", validators=[
         DataRequired("Campo Obrigatório.")
-    ])
+    ], render_kw={"placeholder": "Ex: dd/mm/aaaa"})
     amount = StringField("Valor", validators=[
         Regexp(regex=r'^[0-9]*[.,]{0,1}[0-9]*$', message="Digite um valor válido."),
         DataRequired("Campo Obrigatório.")
     ], render_kw={"placeholder": "Ex: 1550,50"})
     submit = SubmitField("Novo Débito")
+
+class EditDebitForm(FlaskForm):
+    reason = StringField("Motivo", validators=[
+        Length(0, 35, "Motivo deve conter entre 5 a 35 caracteres.")
+    ])
+    debit_date = DateField("Data", format="%d/%m/%Y", render_kw={"placeholder": "Ex: dd/mm/aaaa"}, validators=[Optional()
+
+    ])
+    amount = StringField("Valor", validators=[
+        Regexp(regex=r'^[0-9]*[.,]{0,1}[0-9]*$', message="Digite um valor válido.")
+    ], render_kw={"placeholder": "Ex: 1550,50"})
+    submit = SubmitField("Atualizar Débito")

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+{% block content %}
+    {% from 'bootstrap/form.html' import render_form %}
+    <div class="row justify-content-md-center">
+        <div class="card col-3 mt-3 pt-4 pb-4 shadow mb-3 bg-white rounded">
+            <div class="row justify-content-md-center">
+                <div class="col-11 form-group">
+                    {{ render_form(form, button_style="success btn-block shadow-sm", button_size="sm") }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
