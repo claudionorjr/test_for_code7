@@ -101,6 +101,11 @@ def init_routes(app):
     @app.route("/about_debits/<int:id>", methods=["GET","POST"])
     @login_required
     def about_debits(id):
+        users = get_users()
+        client = []
+        for user in users:
+            if user['id'] == id:
+                client = user
         form = NewDebitForm()
         debits = DebitModel.query.filter_by(user_id=id)
 
@@ -120,7 +125,7 @@ def init_routes(app):
 
             return redirect(url_for("about_debits", id=id))
 
-        return render_template("about_debits.html", form=form, debits=debits, user_id=id)
+        return render_template("about_debits.html", form=form, debits=debits, user_id=id, client=client)
     
     @app.route("/about_debits/<int:id>/delete_debit/<int:debit_id>")
     @login_required

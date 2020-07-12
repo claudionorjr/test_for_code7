@@ -1,6 +1,6 @@
 # Documentação
 
-## Executando o programa em Linux/windows
+## Executando o programa em Linux ou windows
 
 ### LINUX
 
@@ -8,10 +8,10 @@
 - No terminal com o diretório do programa setado:
 
 * `help` para mais informações.
-* `installvirtualenv` serve para instalar o virtualenv.
-* `ambvir`serve para criar um ambiente virtual.
-* `start` serve para iniciar seu ambiente virtual. 
-* `install` serve para instalar todas as dependências necessárias. 
+* `installvirtualenv` instala o virtualenv.
+* `ambvir` cria um ambiente virtual.
+* `start` inicia seu ambiente virtual. 
+* `install` instala todas as dependências necessárias. 
 * `run` executa o arquivo principal.
 * `test` executa os testes unitários.
 
@@ -22,11 +22,11 @@
 - No terminal com o diretório do programa setado:
 
 * `sudo apt install virtualenv` (se ainda não tiver instalado)
-* `virtualenv .ambvir --python=python3.7` (instalar o virtualenv `.ambvir`)
-* `source .ambvir/bin/activate` (iniciar seu ambiente virtual)
-* `pip install -r requirements/base.txt` (instalar todas as dependências necessárias)
-* `python app.py` (executa o arquivo principal)
-* `pytest -v` (executa os testes unitários)
+* `virtualenv .ambvir --python=python3.7` (instalando o virtualenv `.ambvir`)
+* `source .ambvir/bin/activate` (iniciando seu ambiente virtual)
+* `pip install -r requirements/base.txt` (instalando todas as dependências necessárias)
+* `python app.py` (executando o arquivo principal)
+* `pytest -v` (executando os testes unitários)
 
 - Depois é só acessar a rota `http://127.0.0.1:5000/`
 
@@ -37,11 +37,11 @@
 - No terminal com o diretório do programa setado:
 
 * `pip install virtualenv` (se ainda não tiver instalado)
-* `virtualenv .ambvir --python=python3.7` (instalar o virtualenv `.ambvir`)
-* `.\.ambvir\Scripts\activate` (iniciar seu ambiente virtual)
-* `pip install -r requirements\base.txt` (instalar todas as dependências necessárias)
-* `python app.py` (executa o arquivo principal)
-* `pytest -v` (executa os testes unitários)
+* `virtualenv .ambvir --python=python3.7` (instalando o virtualenv `.ambvir`)
+* `.\.ambvir\Scripts\activate` (iniciando seu ambiente virtual)
+* `pip install -r requirements\base.txt` (instalando todas as dependências necessárias)
+* `python app.py` (executando o arquivo principal)
+* `pytest -v` (executando os testes unitários)
 
 - Depois é só acessar a rota `http://127.0.0.1:5000/`
 
@@ -64,10 +64,6 @@
 # Home
 @app.route("/current_user")
 
-# Formulário para enviar arquivo na página Home
-# ID da empresa cujo o formulário fica na mesma linha da tabela!
-@app.route('/current_user/uploader/<int:id>', methods = ['GET', 'POST'])
-
 # Sobre a conta do usuário
 @app.route("/current_user/account")
 
@@ -75,11 +71,25 @@
 @app.route("/current_user/delete")
 
 # Deleta o usuário logado
-# ID do usuário logado!
 @app.route("/current_user/delete/<int:id>")
 
 # Logout do usuário autenticado
 @app.route("/logout")
+
+# Lista de Devedores
+@app.route("/debtors")
+
+# Sobre os débitos de um respectivo cliente
+@app.route("/about_debits/<int:id>", methods=["GET","POST"])
+
+# Deletar um débito de um respectivo cliente
+@app.route("/about_debits/<int:id>/delete_debit/<int:debit_id>")
+
+# Editar um débito de um respectivo cliente
+@app.route("/about_debits/<int:id>/edit_debits/<int:debit_id>", methods=["GET","POST"])
+
+# Deletar todos os débitos de um cliente
+@app.route("/debtors/delete_all_debits/<int:id>")
 ```
 
 

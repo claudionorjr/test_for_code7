@@ -42,7 +42,7 @@ def test_register_if_return_200(client):
 
 def test_if_have_registrar(client):
     response = client.get("/")
-    assert "Registrar" in response.get_data(as_text=True)
+    assert "Cadastrar" in response.get_data(as_text=True)
 
 def test_if_have_logar(client):
     response = client.get("/")
