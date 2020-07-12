@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Devedores {% endblock %}
+{% block content %}
+    <div class="row justify-content-md-center">
+        <div class="card col-10 ml-2 mt-3 pt-4 pb-4 shadow mb-2 bg-white rounded">
+            <table class="col-12 ml-3 table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Fone</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{user['id']}}</td>
+                            <td>{{user['name']}}</td>
+                            <td>{{user['email']}}</td>
+                            <td>{{user['phone']}}</td>
+                            <td class="text-center">
+                                <a href="{{ url_for('about_debits', id=user['id']) }}" class="btn btn-success btn-sm shadow-sm ml-2">Gerir Débitos</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ url_for('delete_all_debits', id=user['id']) }}" class="btn btn-danger btn-sm shadow-sm ml-2">Excluir Débitos</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

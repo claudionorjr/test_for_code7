@@ -5,6 +5,7 @@ from data.sql_alchemy import database as db
 from src.models.user import UserModel
 from src.routes import init_routes
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('.env')

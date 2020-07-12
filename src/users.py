@@ -1,4 +1,6 @@
 import requests
+from src.models.debit import DebitModel
+
 
 def get_users():
     url = "https://jsonplaceholder.typicode.com/users"
@@ -7,9 +9,10 @@ def get_users():
         return response.json()
     return {'message': 'Request not found!.'}, 404
 
-#print(get_users()[0]['name'])
-    #[Running] python -u "c:\Users\Blausius\Desktop\test-code7\src\users.py"
-    #Leanne Graham
-
 def with_debits():
-    pass
+    users = get_users()
+    debtors = []
+    for user in users:
+        if DebitModel.query.filter_by(user_id=user['id']).first():
+            debtors.append(user)
+    return debtors

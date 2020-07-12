@@ -2,6 +2,7 @@ import pytest
 from src.main import create_app
 from data.sql_alchemy import database as db
 
+
 @pytest.fixture
 def client():
     app = create_app()

@@ -5,7 +5,7 @@ from data.sql_alchemy import database as db
 from src.models.user import UserModel
 from src.models.debit import DebitModel
 from .forms import LoginForm, RegisterForm, NewDebitForm, EditDebitForm
-from .users import get_users
+from .users import get_users, with_debits
 
 
 def session_to_add(obj):
@@ -92,6 +92,12 @@ def init_routes(app):
         logout_user()
         return redirect(url_for("login"))
 
+    @app.route("/debtors")
+    @login_required
+    def about_debtors():
+        users = with_debits()
+        return render_template("debtors.html", users=users)
+
     @app.route("/about_debits/<int:id>", methods=["GET","POST"])
     @login_required
     def about_debits(id):
@@ -116,7 +122,7 @@ def init_routes(app):
 
         return render_template("about_debits.html", form=form, debits=debits, user_id=id)
     
-    @app.route("/about_debits/<int:id>/delete_debits/<int:debit_id>")
+    @app.route("/about_debits/<int:id>/delete_debit/<int:debit_id>")
     @login_required
     def delete_debit(id, debit_id):
         debits = DebitModel.query.filter_by(id=debit_id).first()
@@ -148,3 +154,18 @@ def init_routes(app):
             return redirect(url_for("about_debits", id=id))
 
         return render_template("edit_debit.html", form=form)
+    
+    @app.route("/debtors/delete_all_debits/<int:id>")
+    @login_required
+    def delete_all_debits(id):
+        debits = DebitModel.query.filter_by(user_id=id)
+        try:
+            for debit in debits:
+                db.session.delete(debit)
+            db.session.commit()
+            flash(message="Cliente deletado da lista de devedores!", category="success")
+        except:
+            flash(message="Erro ao deletar cliente da lista de devedores.", category="warning")
+            return redirect(url_for("about_debtors"))
+
+        return redirect(url_for("about_debtors"))

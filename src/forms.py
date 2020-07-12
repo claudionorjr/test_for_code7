@@ -43,7 +43,7 @@ class NewDebitForm(FlaskForm):
     amount = StringField("Valor", validators=[
         Regexp(regex=r'^[0-9]*[.,]{0,1}[0-9]*$', message="Digite um valor válido."),
         DataRequired("Campo Obrigatório.")
-    ], render_kw={"placeholder": "Ex: 1550,50"})
+    ], render_kw={"placeholder": "Ex: 1550.50"})
     submit = SubmitField("Novo Débito")
 
 class EditDebitForm(FlaskForm):
@@ -55,5 +55,5 @@ class EditDebitForm(FlaskForm):
     ])
     amount = StringField("Valor", validators=[
         Regexp(regex=r'^[0-9]*[.,]{0,1}[0-9]*$', message="Digite um valor válido.")
-    ], render_kw={"placeholder": "Ex: 1550,50"})
+    ], render_kw={"placeholder": "Ex: 1550.50"})
     submit = SubmitField("Atualizar Débito")

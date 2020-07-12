@@ -6,7 +6,7 @@
 {% else %}
     <div>
         <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
-        <a class="navbar-brand" href="">Devedores</a>
+        <a class="navbar-brand" href="{{ url_for('about_debtors') }}">Devedores</a>
         <a class="navbar-brand" href="{{ url_for('account') }}">Conta</a>
     </div>
     <a class="navbar-brand" href="{{ url_for('logout') }}">Sair</a>
