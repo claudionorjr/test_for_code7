@@ -3,7 +3,8 @@ from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from data.sql_alchemy import database as db
 from src.models.user import UserModel
-from .forms import LoginForm, RegisterForm
+from src.models.debit import DebitModel
+from .forms import LoginForm, RegisterForm, NewDebitForm
 from .users import get_users
 
 
@@ -91,8 +92,36 @@ def init_routes(app):
         logout_user()
         return redirect(url_for("login"))
 
-    @app.route("/about_debits")
+    @app.route("/about_debits/<int:id>", methods=["GET","POST"])
     @login_required
-    def about_debits():
-        users = get_users()
-        return render_template("about_debits.html", users=users)
+    def about_debits(id):
+        form = NewDebitForm()
+        debits = DebitModel.query.filter_by(user_id=id)
+
+        if form.validate_on_submit():
+            debit = DebitModel()
+            debit.user_id = id
+            debit.reason = form.reason.data
+            debit.debit_date = form.debit_date.data
+            debit.amount = form.amount.data
+
+            try:
+                session_to_add(debit)
+                flash(message="Débito criado com sucesso!", category="success")
+            except:
+                flash(message="Erro, não foi possível criar o débito.", category="warning")
+                return redirect(url_for("about_debits", id=id))
+
+            return redirect(url_for("about_debits", id=id))
+
+        return render_template("about_debits.html", form=form, debits=debits)
+    
+    @app.route("/about_debits/delete_debits")
+    @login_required
+    def delete_debit():
+        pass
+
+    @app.route("/about_debits/edit_debits")
+    @login_required
+    def edit_debit():
+        pass

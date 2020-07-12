@@ -14,14 +14,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for user in users|sort(reverse=true, attribute='risk_rating') %}
+                    {% for user in users %}
                         <tr>
                             <td>{{user['id']}}</td>
                             <td>{{user['name']}}</td>
                             <td>{{user['email']}}</td>
                             <td>{{user['phone']}}</td>
                             <td class="text-center">
-                                <a href="{{ url_for('about_debits') }}" class="btn btn-success btn-sm shadow-sm ml-2">Gerir Débitos</a>
+                                <a href="{{ url_for('about_debits', id=user['id']) }}" class="btn btn-success btn-sm shadow-sm ml-2">Gerir Débitos</a>
                             </td>
                         </tr>
                     {% endfor %}
